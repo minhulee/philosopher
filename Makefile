@@ -10,8 +10,10 @@ LIBFT_ARC		=		./lib/libft/libft.a
 SRCS			=		./srcs/philo.c						\
 						./srcs/0_philo_err/philo_err.c		\
 						./srcs/1_parsing/parsing.c			\
+						./srcs/2_thread/util.c				\
 						./srcs/2_thread/thread.c			\
-						./srcs/2_thread/sleep.c
+						./srcs/2_thread/eat.c				\
+						./srcs/2_thread/sleep.c				\
 
 OBJ				=		$(SRCS:.c=.o)
 

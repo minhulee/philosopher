@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 21:17:36 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/29 12:06:19 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/05/30 17:13:39 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,98 +17,102 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-long	philo_time(struct timeval start)
-{
-	struct timeval	end;
-	long			s;
-	long			us;
-	double			ms;
-
-	gettimeofday(&end, NULL);
-	s  = end.tv_sec  - start.tv_sec;
-	us = end.tv_usec - start.tv_usec;
-	ms = (s * 1000 + us / 1000.0);
-	return (ms);
-}
-
-void	*temp(void *av)
+void	*runing(void *av)
 {
 	t_pi	*info;
-	int		tid;
-	int		res;
-	struct timeval	time;
+	int		seat;
 
 	info = (t_pi *)av;
-	pthread_mutex_lock(&info->ready_mutex);
-	info->ready++;
-	tid = info->ready;
-	pthread_mutex_unlock(&info->ready_mutex);
-	while (1)
+	pthread_mutex_lock(&info->wait.ready_mutex);
+	seat = info->wait.ready;
+	info->wait.ready++;
+	pthread_mutex_unlock(&info->wait.ready_mutex);
+	pthread_mutex_lock(&info->wait.start_mutex);
+	pthread_mutex_unlock(&info->wait.start_mutex);
+	// - 한번에 시작해라 씹련들아. -
+	if (seat % 2 == 1)
+		usleep(info->eat_to_time / 4 * 1000);
+	for (int i = 0; i < 10; i++)
 	{
-		if (info->ready < 0)
-			break ;
+		philo_eat(info, &info->run, seat);
+		philo_sleep(info, &info->run, seat);
+		philo_printf(info, philo_current(&info->run), seat, "is thinking");
 	}
-	if (gettimeofday(&time, NULL) != 0)
-		exit(1);
-	philo_sleep(info, tid, time);
 	return (NULL);
 }
 
-void	start_thread(t_pi *info)
+void	start_thread(t_pi *info, t_pwait *wait, t_prun *run)
 {
+	struct timeval	time;
+
 	while (1)
 	{
-		if (info->ready == info->philo)
+		pthread_mutex_lock(&wait->ready_mutex);
+		if (wait->ready == info->philo_num)
 		{
-			pthread_mutex_lock(&info->ready_mutex);
-			info->ready = -1;
-			pthread_mutex_unlock(&info->ready_mutex);
+			if (gettimeofday(&time, NULL) != 0)
+				exit_err(OUT_OF_MEMORY);
+			run->start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+			pthread_mutex_unlock(&wait->ready_mutex);
+			pthread_mutex_unlock(&wait->start_mutex);
 			break ;
 		}
+		pthread_mutex_unlock(&wait->ready_mutex);
+		usleep(100);
 	}
 }
 
-void	new_thread(t_pi *info)
+static void	make_forks(t_pi *info, t_prun *run)
 {
 	int	count;
 
-	info->forks = ft_calloc(info->philo, sizeof(t_b));
-	if (!info->forks)
+	run->forks = ft_calloc(info->philo_num, sizeof(t_b));
+	if (!run->forks)
 		exit_err(OUT_OF_MEMORY);
-	info->fork_mutex = ft_calloc(info->philo, sizeof(pthread_mutex_t));
-	if (!info->fork_mutex)
+	run->fork_mutex = ft_calloc(info->philo_num, sizeof(pthread_mutex_t));
+	if (!run->fork_mutex)
 		exit_err(OUT_OF_MEMORY);
-
-
 	count = 0;
-	while (count < info->philo)
+	while (count < info->philo_num)
 	{
-		pthread_mutex_init(&info->fork_mutex[count], NULL);
+		run->forks[count] = FALSE;
+		pthread_mutex_init(&run->fork_mutex[count], NULL);
 		count++;
 	}
+}
 
-	ft_printf("%ld\n", info->start_time.tv_sec);
+static void	new_thread(t_pi *info, t_prun *run)
+{
+	int	count;
 
-	info->philos = ft_calloc(info->philo, sizeof(pthread_t));
-	if (!info->philos)
-		exit_err(OUT_OF_MEMORY);
 	count = 0;
-	while (count < info->philo) // 들어온 수 만큼 쓰레드 생성
+	while (count < info->philo_num) // 들어온 수 만큼 쓰레드 생성
 	{
-		if (pthread_create(&info->philos[count], NULL, temp, (void *)info) != 0)
+		if (pthread_create(&run->philos[count], NULL, runing, (void *)info) != 0)
 		{
 			ft_printf("thread_faild..\n");
 			exit(1);
 		}
 		count++;
 	}
+}
 
-	start_thread(info);
+void	philo(t_pi *info, t_pwait *wait, t_prun *run)
+{
+	int	count;
+
+	pthread_mutex_lock(&wait->start_mutex);
+	make_forks(info, run);
+	run->philos = ft_calloc(info->philo_num, sizeof(pthread_t));
+	if (!run->philos)
+		exit_err(OUT_OF_MEMORY);
+	new_thread(info, run);
+	start_thread(info, &info->wait, &info->run);
 
 	count = 0;
-	while (count < info->philo)
+	while (count < info->philo_num)
 	{
-		if (pthread_join(info->philos[count], NULL) != 0)
+		if (pthread_join(run->philos[count], NULL) != 0)
 		{
 			ft_printf("join failed..\n");
 			exit(1);

@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:38:30 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/29 04:19:13 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/05/30 17:04:25 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,33 @@ typedef enum e_bool
 	TRUE
 }	t_b;
 
+typedef struct s_philo_wait
+{
+	int	ready;
+	t_b	start;
+	pthread_mutex_t	ready_mutex;
+	pthread_mutex_t	start_mutex;
+}	t_pwait;
+
+typedef struct s_philo_running
+{
+	long			start;
+	t_b				*forks;
+	t_b				died;
+	pthread_t		*philos;
+	pthread_mutex_t	*fork_mutex;
+	pthread_mutex_t	printing;
+}	t_prun;
+
 typedef struct s_philo_info
 {
-	int				philo;
-	int				dead;
-	int				eat;
-	int				sleep;
-	int				must;
-	struct timeval	start_time;
-	int				ready;
-	pthread_mutex_t	ready_mutex;
-	pthread_t		*philos;
-	t_b				*forks;
-	pthread_mutex_t	*fork_mutex;
-	pthread_mutex_t	sleeping;
-	pthread_mutex_t	thinking;
+	int				philo_num;
+	int				die_to_time;
+	int				eat_to_time;
+	int				sleep_to_time;
+	int				must_eat;
+	t_pwait			wait;
+	t_prun			run;
 	t_perrno		errno;
 }	t_pi;
 
@@ -54,8 +66,12 @@ void	exit_err(int errno);
 void	parsing(t_pi *info, int ac, char **s);
 
 /* thread */
-void	new_thread(t_pi *info);
-long	philo_time(struct timeval start);
-void	philo_sleep(t_pi *info, int tid, struct timeval time);
+void	philo(t_pi *info, t_pwait *ready, t_prun *run);
+void	philo_delay(t_pi *info, t_prun *run, int c);
+long	philo_current(t_prun *run);
+long	philo_elapsed(t_prun *run, long start);
+void	philo_printf(t_pi *info, long time, int seat, char *s);
+void	philo_eat(t_pi *info, t_prun *run, int seat);
+void	philo_sleep(t_pi *info, t_prun *run, int seat);
 
 #endif

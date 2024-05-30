@@ -6,20 +6,19 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 00:20:29 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/29 04:22:00 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/05/30 17:20:38 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 #include <sys/time.h>
 
-void	philo_sleep(t_pi *info, int tid, struct timeval time)
+void	philo_sleep(t_pi *info, t_prun *run, int seat)
 {
-	struct timeval	end;
+	long	time;
 
-	usleep(info->sleep * 1000);
-	gettimeofday(&end, NULL);
-	pthread_mutex_lock(&info->sleeping);
-	printf("%ld %d is sleeping\n", philo_time(time), tid);
-	pthread_mutex_unlock(&info->sleeping);
+	time = philo_current(run);
+	philo_printf(info, time, seat, "is sleeping");
+	while (philo_elapsed(run, time) < info->sleep_to_time)
+		usleep(10);
 }
