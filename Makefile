@@ -1,6 +1,6 @@
 NAME			=		philo
 CC				=		cc
-CFLAGS			=
+CFLAGS			=		-Wall -Werror -Wextra -fsanitize=thread
 PRINTF_DIR		=		lib/ft_printf
 PRINTF_ARC		=		lib/ft_printf/libftprintf.a
 
@@ -12,6 +12,7 @@ SRCS			=		./srcs/philo.c						\
 						./srcs/1_parsing/parsing.c			\
 						./srcs/2_thread/util.c				\
 						./srcs/2_thread/thread.c			\
+						./srcs/2_thread/run.c				\
 						./srcs/2_thread/eat.c				\
 						./srcs/2_thread/sleep.c				\
 

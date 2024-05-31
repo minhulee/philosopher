@@ -6,29 +6,11 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:30:56 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/30 16:56:25 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/05/31 16:17:33 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-static void	free_split(char **split)
-{
-	int	i;
-
-	if (!split)
-		return ;
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		split[i] = NULL;
-		i++;
-	}
-	free(split);
-	split = NULL;
-	return ;
-}
 
 static int	is_digit_atoi(char *s)
 {

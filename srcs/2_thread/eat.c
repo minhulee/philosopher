@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 00:20:31 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/30 17:26:55 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/05/31 16:20:13 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	philo_eat(t_pi *info, t_prun *run, int seat)
 	t_b		right;
 	long	time;
 
+	time = philo_current(run);
 	left = FALSE;
 	right = FALSE;
 	while (!left || !right)
@@ -81,9 +82,9 @@ void	philo_eat(t_pi *info, t_prun *run, int seat)
 		if (!right && available_right_fork(info, run, seat))
 			right = TRUE;
 	}
-	time = philo_current(run);
+	run->philos[seat].last_eat = time;
+	run->philos[seat].count_eat++;
 	philo_printf(info, time, seat, "is eating");
-	while (philo_elapsed(run, time) < info->eat_to_time)
-		usleep(10);
 	put_forks(info, run, seat);
+	philo_delay(run, time, info->eat_to_time);
 }

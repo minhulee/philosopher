@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:39:02 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/28 21:49:39 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/05/31 09:12:20 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ typedef enum e_philo_errno
 	OK = -1,
 	INVALID_ARGV,
 	OUT_OF_MEMORY,
-	NOT_DIGIT,
-	NOT_INTEGER
+	THREAD_CREATE_FAIL,
+	THREAD_JOIN_FAIL,
+	GET_TIME_FAIL
 }	t_perrno;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 00:20:29 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/30 17:20:38 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/05/31 09:10:51 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,5 @@ void	philo_sleep(t_pi *info, t_prun *run, int seat)
 
 	time = philo_current(run);
 	philo_printf(info, time, seat, "is sleeping");
-	while (philo_elapsed(run, time) < info->sleep_to_time)
-		usleep(10);
+	philo_delay(run, time, info->sleep_to_time);
 }

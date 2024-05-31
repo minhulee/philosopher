@@ -6,13 +6,14 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:38:30 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/30 17:04:25 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/05/31 10:50:30 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+#include <stdatomic.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <pthread.h>
@@ -31,18 +32,23 @@ typedef enum e_bool
 
 typedef struct s_philo_wait
 {
-	int	ready;
-	t_b	start;
+	atomic_int		ready;
 	pthread_mutex_t	ready_mutex;
-	pthread_mutex_t	start_mutex;
 }	t_pwait;
+
+typedef struct s_philo
+{
+	int		count_eat;
+	long	last_eat;
+}	t_p;
 
 typedef struct s_philo_running
 {
+	pthread_t		*philos_t;
+	t_p				*philos;
 	long			start;
-	t_b				*forks;
 	t_b				died;
-	pthread_t		*philos;
+	t_b				*forks;
 	pthread_mutex_t	*fork_mutex;
 	pthread_mutex_t	printing;
 }	t_prun;
@@ -65,13 +71,17 @@ void	exit_err(int errno);
 /* parse */
 void	parsing(t_pi *info, int ac, char **s);
 
-/* thread */
-void	philo(t_pi *info, t_pwait *ready, t_prun *run);
-void	philo_delay(t_pi *info, t_prun *run, int c);
+/* util */
+void	philo_delay(t_prun *run, long start, long end);
 long	philo_current(t_prun *run);
 long	philo_elapsed(t_prun *run, long start);
 void	philo_printf(t_pi *info, long time, int seat, char *s);
+
+/* thread */
+void	philo(t_pi *info, t_pwait *ready, t_prun *run);
+void	*runing(void *av);
 void	philo_eat(t_pi *info, t_prun *run, int seat);
 void	philo_sleep(t_pi *info, t_prun *run, int seat);
+t_b	is_died_philo(t_pi *info, t_prun *run, int seat);
 
 #endif

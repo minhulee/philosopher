@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:44:09 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/30 15:40:23 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/05/31 09:06:34 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	init_info(t_pi *info, t_pwait *wait, t_prun *run)
 	wait->ready = 0;
 	run->died = FALSE;
 	pthread_mutex_init(&wait->ready_mutex, NULL);
-	pthread_mutex_init(&wait->start_mutex, NULL);
 	pthread_mutex_init(&run->printing, NULL);
 }
 

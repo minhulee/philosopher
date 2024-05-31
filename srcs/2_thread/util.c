@@ -6,15 +6,17 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:41:25 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/30 17:04:20 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/05/31 08:53:08 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 #include <sys/time.h>
 
-void	philo_delay(t_pi *info, t_prun *run, int c)
+void	philo_delay(t_prun *run, long start, long end)
 {
+	while (philo_elapsed(run, start) < end)
+		usleep(100);
 	return ;
 }
 
