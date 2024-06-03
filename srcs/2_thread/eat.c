@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   eat.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jangeun-ji <jangeun-ji@student.42seoul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 00:20:31 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/31 16:20:13 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/03 11:44:19 by jangeun-ji       ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,14 @@ t_b	available_left_fork(t_pi *info, t_prun *run, int seat)
 	pthread_mutex_lock(&run->fork_mutex[left]);
 	if (run->forks[left] == FALSE)
 	{
-		philo_printf(info, philo_current(run), seat, "has taken a fork");
 		run->forks[left] = TRUE;
 		res = TRUE;
 	}
-	else
-		pthread_mutex_unlock(&run->fork_mutex[left]);
+	pthread_mutex_unlock(&run->fork_mutex[left]);
 	return (res);
 }
 
-t_b	available_right_fork(t_pi *info, t_prun *run, int seat)
+t_b	available_right_fork(t_prun *run, int seat)
 {
 	t_b		res;
 
@@ -44,12 +42,10 @@ t_b	available_right_fork(t_pi *info, t_prun *run, int seat)
 	pthread_mutex_lock(&run->fork_mutex[seat]);
 	if (run->forks[seat] == FALSE)
 	{
-		philo_printf(info, philo_current(run), seat, "has taken a fork");
 		run->forks[seat] = TRUE;
 		res = TRUE;
 	}
-	else
-		pthread_mutex_unlock(&run->fork_mutex[seat]);
+	pthread_mutex_unlock(&run->fork_mutex[seat]);
 	return (res);
 }
 
@@ -60,6 +56,8 @@ void	put_forks(t_pi *info, t_prun *run, int seat)
 	left = seat - 1;
 	if (left < 0)
 		left = info->philo_num - 1;
+	pthread_mutex_lock(&run->fork_mutex[left]);
+	pthread_mutex_lock(&run->fork_mutex[seat]);
 	run->forks[left] = FALSE;
 	run->forks[seat] = FALSE;
 	pthread_mutex_unlock(&run->fork_mutex[left]);
@@ -78,9 +76,15 @@ void	philo_eat(t_pi *info, t_prun *run, int seat)
 	while (!left || !right)
 	{
 		if (!left && available_left_fork(info, run, seat))
+		{
 			left = TRUE;
-		if (!right && available_right_fork(info, run, seat))
+			philo_printf(info, time, seat, "has taken a fork");
+		}
+		if (!right && available_right_fork(run, seat))
+		{
+			philo_printf(info, time, seat, "has taken a fork");
 			right = TRUE;
+		}
 	}
 	run->philos[seat].last_eat = time;
 	run->philos[seat].count_eat++;

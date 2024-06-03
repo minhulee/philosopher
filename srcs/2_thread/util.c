@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jangeun-ji <jangeun-ji@student.42seoul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:41:25 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/31 08:53:08 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/03 11:26:58 by jangeun-ji       ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 

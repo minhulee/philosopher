@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jangeun-ji <jangeun-ji@student.42seoul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:38:30 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/31 10:50:30 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/03 10:49:10 by jangeun-ji       ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <stdatomic.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <pthread.h>
-#include <sys/time.h>
+# include <stdatomic.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <pthread.h>
+# include <sys/time.h>
 
-#include "../../lib/ft_printf/ft_printf.h"
-#include "../../lib/libft/libft.h"
-#include "./philo_err.h"
+# include "../../lib/ft_printf/ft_printf.h"
+# include "../../lib/libft/libft.h"
+# include "./philo_err.h"
 
 typedef enum e_bool
 {
@@ -49,6 +49,7 @@ typedef struct s_philo_running
 	long			start;
 	t_b				died;
 	t_b				*forks;
+	pthread_mutex_t	died_mutex;
 	pthread_mutex_t	*fork_mutex;
 	pthread_mutex_t	printing;
 }	t_prun;
@@ -82,6 +83,6 @@ void	philo(t_pi *info, t_pwait *ready, t_prun *run);
 void	*runing(void *av);
 void	philo_eat(t_pi *info, t_prun *run, int seat);
 void	philo_sleep(t_pi *info, t_prun *run, int seat);
-t_b	is_died_philo(t_pi *info, t_prun *run, int seat);
+t_b		is_died_philo(t_pi *info, t_prun *run, int seat);
 
 #endif

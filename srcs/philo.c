@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jangeun-ji <jangeun-ji@student.42seoul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:44:09 by minhulee          #+#    #+#             */
-/*   Updated: 2024/05/31 09:06:34 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/03 10:49:51 by jangeun-ji       ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ static void	init_info(t_pi *info, t_pwait *wait, t_prun *run)
 	info->must_eat = 0;
 	info->errno = OK;
 	wait->ready = 0;
-	run->died = FALSE;
 	pthread_mutex_init(&wait->ready_mutex, NULL);
+	run->died = FALSE;
+	pthread_mutex_init(&run->died_mutex, NULL);
 	pthread_mutex_init(&run->printing, NULL);
 }
 
