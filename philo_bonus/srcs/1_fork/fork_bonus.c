@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 18:09:07 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 14:41:12 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 15:44:29 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	end_proc(pid_t *pid, t_philo philo, int size)
 	}
 	sem_post(philo.print);
 	free(pid);
-	pid = NULL;
 }
 
 static void	parent(pid_t *pid, t_philo philo)
@@ -44,6 +43,7 @@ static void	parent(pid_t *pid, t_philo philo)
 		else
 			seat++;
 	}
+	free(pid);
 }
 
 static void	child(int seat, t_philo philo, sem_t **died)
