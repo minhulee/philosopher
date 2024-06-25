@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:39:52 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 12:44:24 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 12:58:28 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_err(int errno)
 void	ft_exit(t_philo philo, sem_t **died)
 {
 	sem_close(philo.print);
-	sem_close(philo.print);
+	sem_close(philo.fork);
 	close_died(&died, philo.info->philo_num);
 	exit(0);
 }
