@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 18:06:27 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 13:14:56 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 14:19:25 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static sem_t	**init_died_sem(int philo_num)
 			break ;
 	}
 	if (i != philo_num)
-		close_died(&died, i - 1);
+		close_died(&died, i);
 	return (died);
 }
 

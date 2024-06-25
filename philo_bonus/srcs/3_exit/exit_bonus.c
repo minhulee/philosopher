@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:39:52 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 13:17:06 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 14:26:05 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 void	close_died(sem_t ***died, int size)
 {
-	sem_t	**target;
 	int		i;
 
-	target = *died;
 	i = 0;
-	while (i < size && target[i])
+	while (i < size)
 	{
-		sem_close(target[i]);
+		sem_close((*died)[i]);
 		i++;
 	}
-	free(target);
-	target = NULL;
+	free(*died);
+	*died = NULL;
 }
 
 char	*get_err_message(int errno)
@@ -33,7 +31,6 @@ char	*get_err_message(int errno)
 	char	*err[ERRMAX];
 
 	err[INVALID_ARGV] = "Error\ninvalid argvs.. : ";
-	err[INIT_INFO_FAIL] = "Error\ninit info failed.. : ";
 	err[INIT_SEM_FAIL] = "Error\ninit sem failed.. : ";
 	err[BOOT_TIME_FAIL] = "Error\nget booted time failed.. : ";
 	err[OUT_OF_MEMORY] = "Error\nout of memory.. : ";
@@ -43,7 +40,7 @@ char	*get_err_message(int errno)
 
 void	ft_err(int errno, void *av)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	if (av != NULL)
 	{

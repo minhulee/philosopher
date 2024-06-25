@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 18:09:07 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 13:15:31 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 14:25:36 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ static void	parent(pid_t *pid, t_philo philo)
 	}
 }
 
+static void	child(int seat, t_philo philo, sem_t **died)
+{
+	philo.seat = seat;
+	philo.died = died[seat];
+	run(philo);
+}
+
 void	philo_bonus(t_philo philo, sem_t **died)
 {
 	int		seat;
@@ -53,18 +60,16 @@ void	philo_bonus(t_philo philo, sem_t **died)
 
 	pid = (pid_t *)malloc(philo.info->philo_num * sizeof(pid_t));
 	if (!pid)
+	{
+		close_died(&died, philo.info->philo_num);
 		ft_err(OUT_OF_MEMORY, &philo);
+	}
 	seat = -1;
 	while (++seat < philo.info->philo_num)
 	{
 		pid[seat] = fork();
 		if (pid[seat] == 0)
-		{
-			philo.seat = seat;
-			philo.died = died[seat];
-			run(philo);
-			return ;
-		}
+			child(seat, philo, died);
 		else if (pid[seat] < 0)
 		{
 			end_proc(pid, philo);
