@@ -6,16 +6,11 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:22:09 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 11:11:04 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 12:01:49 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-void	check(void)
-{
-	system("leaks philo");
-}
 
 long	get_time(void)
 {

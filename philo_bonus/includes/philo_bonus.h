@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:38:30 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 11:08:34 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 12:43:48 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <string.h>
 # include <signal.h>
 # include <semaphore.h>
+# include <fcntl.h>
 
 # include "./philo_exit_bonus.h"
 
@@ -54,7 +55,7 @@ typedef struct s_philo
 
 /* philo */
 long	get_time(void);
-void	close_died(sem_t ***died);
+void	close_died(sem_t ***died, int size);
 void	ft_mutex_init(pthread_mutex_t *mutex);
 
 /* parse */

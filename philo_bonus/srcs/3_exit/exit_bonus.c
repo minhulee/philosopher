@@ -6,20 +6,20 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:39:52 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 10:23:33 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 12:44:24 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo_bonus.h"
 
-void	close_died(sem_t ***died)
+void	close_died(sem_t ***died, int size)
 {
 	sem_t	**target;
 	int		i;
 
 	target = *died;
 	i = 0;
-	while (target[i])
+	while (i < size && target[i])
 	{
 		sem_close(target[i]);
 		i++;
@@ -54,6 +54,6 @@ void	ft_exit(t_philo philo, sem_t **died)
 {
 	sem_close(philo.print);
 	sem_close(philo.print);
-	close_died(&died);
+	close_died(&died, philo.info->philo_num);
 	exit(0);
 }

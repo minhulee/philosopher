@@ -6,12 +6,11 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 18:09:07 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 10:43:48 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 12:44:33 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo_bonus.h"
-#include <sys/semaphore.h>
 
 static void	end_proc(pid_t *pid, t_philo philo)
 {
@@ -69,7 +68,7 @@ void	philo_bonus(t_philo philo, sem_t **died)
 		else if (pid[seat] < 0)
 		{
 			end_proc(pid, philo);
-			close_died(&died);
+			close_died(&died, philo.info->philo_num);
 			ft_err(FORK_FAILED);
 		}
 	}

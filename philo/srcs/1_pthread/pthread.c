@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 21:17:36 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/23 18:59:02 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 12:01:24 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ static void	new_thread(t_philo *philos)
 		philos[seat].last_eat = get_time() - philos->info->booted;
 		if (pthread_create(&philos[seat].philo, NULL, run,
 				(void *)&philos[seat]) == FAIL)
-			ft_err(PTHREAD_CREATE_FAIL, (void *)philos);
+			exit(1);
 		seat++;
 	}
 	seat = 0;
 	while (seat < philo_num)
 	{
 		if (pthread_join(philos[seat].philo, NULL) == FAIL)
-			ft_err(PTHREAD_JOIN_FAIL, (void *)philos);
+			exit(1);
 		seat++;
 	}
 }

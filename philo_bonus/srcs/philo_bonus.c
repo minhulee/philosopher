@@ -6,12 +6,11 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 18:06:27 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 11:23:55 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 12:44:13 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
-#include <sys/fcntl.h>
 #include <sys/semaphore.h>
 
 static sem_t	**init_died_sem(int philo_num)
@@ -37,7 +36,7 @@ static sem_t	**init_died_sem(int philo_num)
 			break ;
 	}
 	if (i != philo_num)
-		close_died(&died);
+		close_died(&died, i - 1);
 	return (died);
 }
 
@@ -46,15 +45,15 @@ void	init_sem(t_philo *philo, sem_t ***died)
 	sem_unlink("fork");
 	sem_unlink("print");
 	philo->fork = sem_open("fork", O_CREAT, 0644, philo->info->philo_num);
-	if (philo->fork < 0)
+	if (philo->fork == SEM_FAILED)
 	{
-		close_died(died);
+		close_died(died, philo->info->philo_num);
 		ft_err(INIT_SEM_FAIL);
 	}
 	philo->print = sem_open("print", O_CREAT, 0644, 1);
-	if (philo->print < 0)
+	if (philo->print == SEM_FAILED)
 	{
-		close_died(died);
+		close_died(died, philo->info->philo_num);
 		sem_close(philo->fork);
 		ft_err(INIT_SEM_FAIL);
 	}
