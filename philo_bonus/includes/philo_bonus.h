@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:38:30 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 12:53:26 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 13:16:21 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ long	philo_current(t_philo philo);
 void	philo_printf(t_philo philo, char *s);
 
 /* philo_err */
-void	ft_err(int errno);
+void	ft_err(int errno, void *av);
 void	ft_exit(t_philo philo, sem_t **died);
 
 /* ltoa */

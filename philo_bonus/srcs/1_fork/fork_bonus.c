@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 18:09:07 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 12:44:33 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 13:15:31 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	philo_bonus(t_philo philo, sem_t **died)
 
 	pid = (pid_t *)malloc(philo.info->philo_num * sizeof(pid_t));
 	if (!pid)
-		ft_err(OUT_OF_MEMORY);
+		ft_err(OUT_OF_MEMORY, &philo);
 	seat = -1;
 	while (++seat < philo.info->philo_num)
 	{
@@ -69,7 +69,7 @@ void	philo_bonus(t_philo philo, sem_t **died)
 		{
 			end_proc(pid, philo);
 			close_died(&died, philo.info->philo_num);
-			ft_err(FORK_FAILED);
+			ft_err(FORK_FAILED, &philo);
 		}
 	}
 	parent(pid, philo);

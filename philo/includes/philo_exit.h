@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:39:02 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/23 18:08:28 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 13:08:31 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ typedef enum e_philo_errno
 	INIT_INFO_FAIL,
 	OUT_OF_MEMORY,
 	INIT_FORK_FAIL,
-	PTHREAD_CREATE_FAIL,
-	PTHREAD_JOIN_FAIL,
 	GET_TIME_FAIL
 }	t_perrno;
 

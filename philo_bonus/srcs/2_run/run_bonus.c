@@ -6,11 +6,12 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 08:52:04 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 12:52:55 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 13:12:17 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo_bonus.h"
+#include <pthread.h>
 
 void	ft_sleep(t_philo philo)
 {
@@ -55,7 +56,8 @@ void	run(t_philo philo)
 {
 	pthread_t	moniter;
 
-	pthread_create(&moniter, NULL, monitering, (void *)&philo);
+	if (pthread_create(&moniter, NULL, monitering, (void *)&philo) < 0)
+		exit(1);
 	if (philo.seat % 2 == 1)
 		usleep(philo.info->time_to_eat * 1000 + 100);
 	while (philo.info->must_to_eat < 0
