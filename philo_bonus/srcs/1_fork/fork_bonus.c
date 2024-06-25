@@ -6,18 +6,18 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 18:09:07 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 14:25:36 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 14:41:12 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo_bonus.h"
 
-static void	end_proc(pid_t *pid, t_philo philo)
+static void	end_proc(pid_t *pid, t_philo philo, int size)
 {
 	int	i;
 
 	i = 0;
-	while (i < philo.info->philo_num)
+	while (i < size)
 	{
 		kill(pid[i], SIGKILL);
 		i++;
@@ -38,7 +38,7 @@ static void	parent(pid_t *pid, t_philo philo)
 		waitpid(-1, &status, 0);
 		if (status != 0)
 		{
-			end_proc(pid, philo);
+			end_proc(pid, philo, philo.info->philo_num);
 			return ;
 		}
 		else
@@ -72,7 +72,7 @@ void	philo_bonus(t_philo philo, sem_t **died)
 			child(seat, philo, died);
 		else if (pid[seat] < 0)
 		{
-			end_proc(pid, philo);
+			end_proc(pid, philo, seat);
 			close_died(&died, philo.info->philo_num);
 			ft_err(FORK_FAILED, &philo);
 		}
