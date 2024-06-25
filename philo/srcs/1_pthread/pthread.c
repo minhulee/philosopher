@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 21:17:36 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 12:01:24 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 15:30:09 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	new_thread(t_philo *philos)
 	seat = 0;
 	while (seat < philo_num)
 	{
-		philos[seat].last_eat = get_time() - philos->info->booted;
+		philos[seat].last_eat = get_time(philos) - philos->info->booted;
 		if (pthread_create(&philos[seat].philo, NULL, run,
 				(void *)&philos[seat]) == FAIL)
 			exit(1);

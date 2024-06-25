@@ -6,12 +6,11 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:01:10 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/23 18:50:58 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 14:57:09 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo.h"
-#include <pthread.h>
 
 void	ft_sleep(t_philo *philo)
 {

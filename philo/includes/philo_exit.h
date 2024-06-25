@@ -6,14 +6,14 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:39:02 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 13:08:31 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 14:48:34 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_EXIT_H
 # define PHILO_EXIT_H
 
-# define ERRMAX 8
+# define ERRMAX 6
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
 

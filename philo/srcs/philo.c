@@ -6,24 +6,24 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:22:09 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 12:01:49 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 15:30:56 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-long	get_time(void)
+long	get_time(t_philo *philos)
 {
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) < 0)
-		ft_err(BOOT_TIME_FAIL, NULL);
+		ft_err(BOOT_TIME_FAIL, philos);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
 static void	init_info(t_p_info *info)
 {
-	info->booted = get_time();
+	info->booted = get_time(NULL);
 	info->died = FALSE;
 	if (pthread_mutex_init(&info->died_mutex, NULL) < 0)
 		ft_err(INIT_INFO_FAIL, NULL);

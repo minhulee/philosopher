@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:38:30 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 11:09:28 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 15:28:28 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_philo
 }	t_philo;
 
 /* philo */
-long	get_time(void);
+long	get_time(t_philo *philos);
 void	ft_mutex_init(pthread_mutex_t *mutex);
 
 /* parse */

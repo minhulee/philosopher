@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:41:25 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 11:57:55 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 14:58:34 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,16 @@ void	philo_delay(t_philo *philo, long start, long limit)
 
 void	philo_printf(t_philo *philo, int seat, char *s)
 {
+	pthread_mutex_lock(&philo->info->died_mutex);
+	if (philo->info->died)
+	{
+		pthread_mutex_unlock(&philo->info->died_mutex);
+		return ;
+	}
 	pthread_mutex_lock(&philo->info->print_mutex);
 	printf("%ld %d %s\n", philo_current(philo), seat + 1, s);
 	pthread_mutex_unlock(&philo->info->print_mutex);
+	pthread_mutex_unlock(&philo->info->died_mutex);
 }
 
 long	philo_current(t_philo *philo)
