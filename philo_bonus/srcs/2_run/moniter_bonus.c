@@ -6,11 +6,12 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 10:42:13 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/24 11:31:22 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 11:09:01 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo_bonus.h"
+#include <sys/semaphore.h>
 
 void	*monitering(void *av)
 {
@@ -20,14 +21,15 @@ void	*monitering(void *av)
 	while (1)
 	{
 		sem_wait(philo->died);
-		if (philo_current(philo) - philo->last_eat > philo->info->time_to_die)
+		if (philo_current(*philo) - philo->last_eat > philo->info->time_to_die)
 		{
-			sem_wait(philo->print);
-			printf("%ld %d %s\n", philo_current(philo), philo->seat + 1, "died");
 			sem_post(philo->died);
+			sem_wait(philo->print);
+			printf("%ld %d %s\n", philo_current(*philo),
+				philo->seat + 1, "died");
 			exit(1);
 		}
 		sem_post(philo->died);
-		usleep(100);
+		usleep(300);
 	}
 }

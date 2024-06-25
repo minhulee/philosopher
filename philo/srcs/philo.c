@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:22:09 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/23 18:59:49 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 11:11:04 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	main(int ac, char **av)
 {
 	t_p_info	info;
 
+	if (!(ac == 5 || ac == 6))
+		ft_err(INVALID_ARGV, NULL);
 	parsing(&info, ac, av + 1);
 	init_info(&info);
 	philo(&info);

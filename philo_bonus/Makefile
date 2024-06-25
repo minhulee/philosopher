@@ -1,12 +1,13 @@
 NAME			=		philo_bonus
 CC				=		cc
-CFLAGS			=		-Wall -Werror -Wextra -fsanitize=thread
+CFLAGS			=		-Wall -Werror -Wextra
 
 SRCS			=		./srcs/0_parse/parse_bonus.c	\
 						./srcs/1_fork/fork_bonus.c		\
 						./srcs/2_run/moniter_bonus.c	\
 						./srcs/2_run/run_bonus.c		\
 						./srcs/2_run/util_bonus.c		\
+						./srcs/2_run/ltoa_bonus.c		\
 						./srcs/3_exit/exit_bonus.c		\
 						./srcs/philo_bonus.c
 

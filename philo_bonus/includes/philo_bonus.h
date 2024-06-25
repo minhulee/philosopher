@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:38:30 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/24 11:31:11 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 11:08:34 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,26 +54,29 @@ typedef struct s_philo
 
 /* philo */
 long	get_time(void);
+void	close_died(sem_t ***died);
 void	ft_mutex_init(pthread_mutex_t *mutex);
 
 /* parse */
 void	parsing(t_p_info *info, int ac, char **s);
 
 /* fork */
-void	philo_bonus(t_philo *philo);
+void	philo_bonus(t_philo philo, sem_t **died);
 
 /* run */
 void	*monitering(void *av);
-void	run(t_philo *philo);
+void	run(t_philo philo);
 
 /* util */
-void	philo_delay(t_philo *philo, long start, long limit);
-long	philo_current(t_philo *philo);
-void	philo_printf(t_philo *philo, char *s);
+void	philo_delay(t_philo philo, long start, long limit);
+long	philo_current(t_philo philo);
+void	philo_printf(t_philo philo, char *s);
 
 /* philo_err */
-void	ft_exit(t_philo *philos);
 void	ft_err(int errno);
+void	ft_exit(t_philo philo, sem_t **died);
 
+/* ltoa */
+char	*ft_ltoa(long n);
 
 #endif

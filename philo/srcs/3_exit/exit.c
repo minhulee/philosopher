@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:39:52 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/24 11:07:48 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 11:09:43 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*get_err_message(int errno)
 	return (err[errno]);
 }
 
-void	ft_err(int errno, t_philo * philos)
+void	ft_err(int errno, t_philo *philos)
 {
 	free_philos(philos);
 	printf("%s%d\n", get_err_message(errno), errno);

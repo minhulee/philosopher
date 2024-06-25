@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:38:30 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/23 18:53:01 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 11:09:28 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	philo_printf(t_philo *philo, int seat, char *s);
 
 /* philo_err */
 void	ft_exit(t_philo *philos);
-void	ft_err(int errno, t_philo * philos);
+void	ft_err(int errno, t_philo *philos);
 
 /* leaks */
 void	check(void);

@@ -6,65 +6,72 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 18:09:07 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/24 11:18:04 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 10:43:48 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo_bonus.h"
+#include <sys/semaphore.h>
 
-void	ft_kill(pid_t *pid, int philo_num)
+static void	end_proc(pid_t *pid, t_philo philo)
 {
-	int	count;
+	int	i;
 
-	count = 0;
-	while (count < philo_num)
+	i = 0;
+	while (i < philo.info->philo_num)
 	{
-		kill(pid[count], SIGKILL);
-		count++;
+		kill(pid[i], SIGKILL);
+		i++;
 	}
+	sem_post(philo.print);
+	free(pid);
+	pid = NULL;
 }
 
-void	parent(pid_t *pid, int philo_num)
+static void	parent(pid_t *pid, t_philo philo)
 {
 	int	seat;
 	int	status;
 
 	seat = 0;
-	while (seat < philo_num)
+	while (seat < philo.info->philo_num)
 	{
 		waitpid(-1, &status, 0);
 		if (status != 0)
 		{
-			ft_kill(pid, philo_num);
-			break ;
+			end_proc(pid, philo);
+			return ;
 		}
 		else
-		{
 			seat++;
-		}
 	}
 }
 
-void	philo_bonus(t_philo *philo) // n개의 프로세스가 생성되면, 복제된 n 개의 필로
+void	philo_bonus(t_philo philo, sem_t **died)
 {
 	int		seat;
 	pid_t	*pid;
 
-	pid = (pid_t *)malloc(philo->info->philo_num * sizeof(pid_t));
+	pid = (pid_t *)malloc(philo.info->philo_num * sizeof(pid_t));
 	if (!pid)
 		ft_err(OUT_OF_MEMORY);
 	seat = -1;
-	while (++seat < philo->info->philo_num)
+	while (++seat < philo.info->philo_num)
 	{
 		pid[seat] = fork();
 		if (pid[seat] == 0)
 		{
-			philo->seat = seat;
+			philo.seat = seat;
+			philo.died = died[seat];
 			run(philo);
 			return ;
 		}
 		else if (pid[seat] < 0)
-			ft_err(OUT_OF_MEMORY);
+		{
+			end_proc(pid, philo);
+			close_died(&died);
+			ft_err(FORK_FAILED);
+		}
 	}
-	parent(pid, philo->info->philo_num);
+	parent(pid, philo);
 }
