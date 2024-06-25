@@ -6,13 +6,11 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 08:52:04 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 11:06:33 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 12:52:55 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo_bonus.h"
-#include <sys/fcntl.h>
-#include <sys/semaphore.h>
 
 void	ft_sleep(t_philo philo)
 {

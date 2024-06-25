@@ -6,12 +6,11 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 18:06:27 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 12:44:13 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/25 12:53:03 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
-#include <sys/semaphore.h>
 
 static sem_t	**init_died_sem(int philo_num)
 {
