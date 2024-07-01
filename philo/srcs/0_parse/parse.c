@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:30:56 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/23 16:19:28 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/06/30 03:12:03 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	convert_sign(char **s, int *sign)
 	}
 }
 
-static int	is_digit_atoi(char *s)
+static t_b	is_digit_atoi(char *s, int *dest)
 {
 	long	sum;
 	int		sign;
@@ -33,24 +33,29 @@ static int	is_digit_atoi(char *s)
 	while (*s)
 	{
 		if (!('0' <= *s && *s <= '9'))
-			ft_err(INVALID_ARGV, NULL);
+			return (FALSE);
 		sum *= 10;
 		sum += *s - 48;
 		s++;
 	}
-	if ((sign * sum) < 0 || INT_MAX < (sign * sum))
-		ft_err(INVALID_ARGV, NULL);
-	return (sum * sign);
+	if ((sign * sum) <= 0 || INT_MAX < (sign * sum))
+		return (FALSE);
+	*dest = sign * sum;
+	return (TRUE);
 }
 
-void	parsing(t_p_info *info, int ac, char **s)
+t_perrno	parsing(t_p_info *info, int ac, char **s)
 {
-	info->philo_num = is_digit_atoi(s[0]);
-	info->time_to_die = is_digit_atoi(s[1]);
-	info->time_to_eat = is_digit_atoi(s[2]);
-	info->time_to_sleep = is_digit_atoi(s[3]);
-	if (ac == 6)
-		info->must_to_eat = is_digit_atoi(s[4]);
-	else
-		info->must_to_eat = -1;
+	if (!is_digit_atoi(s[0], &info->philo_num))
+		return (INVALID_ARGV);
+	if (!is_digit_atoi(s[1], &info->time_to_die))
+		return (INVALID_ARGV);
+	if (!is_digit_atoi(s[2], &info->time_to_eat))
+		return (INVALID_ARGV);
+	if (!is_digit_atoi(s[3], &info->time_to_sleep))
+		return (INVALID_ARGV);
+	info->must_to_eat = -1;
+	if (ac == 6 && !is_digit_atoi(s[4], &info->must_to_eat))
+		return (INVALID_ARGV);
+	return (OK);
 }

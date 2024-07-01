@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:39:52 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 15:30:40 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/01 10:44:20 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,29 @@ void	free_philos(t_philo *philos)
 	philos = NULL;
 }
 
-char	*get_err_message(int errno)
+char	*get_err_message(t_perrno errno)
 {
 	char	*err[ERRMAX];
 
 	err[INVALID_ARGV] = "Error\ninvalid argvs.. : ";
 	err[BOOT_TIME_FAIL] = "Error\nget booted time failed.. : ";
 	err[INIT_INFO_FAIL] = "Error\ninit info failed.. : ";
-	err[OUT_OF_MEMORY] = "Error\nout of memory.. : ";
+	err[INIT_PHILO_FAIL] = "Error\ninit philo faild : ";
 	err[INIT_FORK_FAIL] = "Error\ninit fork failed.. : ";
+	err[CREATE_PTHREAD_FAIL] = "Error\ncreate pthread fail.. : ";
 	err[GET_TIME_FAIL] = "Error\nget time failed.. : ";
 	return (err[errno]);
 }
 
-void	ft_err(int errno, t_philo *philos)
+t_perrno	ft_err(t_perrno errno, t_philo *philos)
 {
 	free_philos(philos);
 	printf("%s%d\n", get_err_message(errno), errno);
-	exit(1);
+	return (errno);
 }
 
-void	ft_exit(t_philo *philos)
+int	ft_exit(t_philo *philos)
 {
 	free_philos(philos);
-	exit(0);
+	return (0);
 }

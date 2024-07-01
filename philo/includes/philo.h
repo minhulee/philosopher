@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:38:30 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 15:28:28 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/01 10:39:46 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ typedef struct s_philo_info
 	int				must_to_eat;
 	long			booted;
 	t_b				died;
+	t_b				start;
 	pthread_mutex_t	died_mutex;
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	start_mutex;
 }	t_p_info;
 
 typedef struct s_fork
@@ -61,28 +63,29 @@ typedef struct s_philo
 }	t_philo;
 
 /* philo */
-long	get_time(t_philo *philos);
-void	ft_mutex_init(pthread_mutex_t *mutex);
+long		get_time(void);
+void		ft_mutex_init(pthread_mutex_t *mutex);
 
 /* parse */
-void	parsing(t_p_info *info, int ac, char **s);
+t_perrno	parsing(t_p_info *info, int ac, char **s);
 
 /* pthread */
-void	philo(t_p_info *info);
+t_perrno	init_philos(t_philo **philos, t_p_info *info);
+t_perrno	philo(t_philo *philos);
 
 /* run */
-void	*run(void *info);
-t_b		ft_died_check(t_philo *philo);
-void	ft_eat(t_philo *philo);
-void	philo_delay(t_philo *philo, long start, long limit);
-long	philo_current(t_philo *philo);
-void	philo_printf(t_philo *philo, int seat, char *s);
+void		*run(void *info);
+t_b			ft_died_check(t_philo *philo);
+void		ft_eat(t_philo *philo);
+void		philo_delay(t_philo *philo, long start, long limit);
+long		philo_current(t_philo *philo);
+void		philo_printf(t_philo *philo, int seat, char *s);
 
 /* philo_err */
-void	ft_exit(t_philo *philos);
-void	ft_err(int errno, t_philo *philos);
+int			ft_exit(t_philo *philos);
+t_perrno	ft_err(int errno, t_philo *philos);
 
 /* leaks */
-void	check(void);
+void		check(void);
 
 #endif

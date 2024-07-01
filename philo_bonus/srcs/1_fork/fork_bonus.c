@@ -6,13 +6,13 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 18:09:07 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 15:44:29 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/01 10:46:25 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo_bonus.h"
 
-static void	end_proc(pid_t *pid, t_philo philo, int size)
+static void	end_process(pid_t *pid, t_philo philo, int size)
 {
 	int	i;
 
@@ -22,7 +22,6 @@ static void	end_proc(pid_t *pid, t_philo philo, int size)
 		kill(pid[i], SIGKILL);
 		i++;
 	}
-	sem_post(philo.print);
 	free(pid);
 }
 
@@ -37,7 +36,8 @@ static void	parent(pid_t *pid, t_philo philo)
 		waitpid(-1, &status, 0);
 		if (status != 0)
 		{
-			end_proc(pid, philo, philo.info->philo_num);
+			end_process(pid, philo, philo.info->philo_num);
+			sem_post(philo.print);
 			return ;
 		}
 		else
@@ -72,7 +72,7 @@ void	philo_bonus(t_philo philo, sem_t **died)
 			child(seat, philo, died);
 		else if (pid[seat] < 0)
 		{
-			end_proc(pid, philo, seat);
+			end_process(pid, philo, seat);
 			close_died(&died, philo.info->philo_num);
 			ft_err(FORK_FAILED, &philo);
 		}

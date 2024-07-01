@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:30:56 by minhulee          #+#    #+#             */
-/*   Updated: 2024/06/25 14:18:37 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/01 10:50:00 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	is_digit_atoi(char *s)
 		sum += *s - 48;
 		s++;
 	}
-	if ((sign * sum) < 0 || INT_MAX < (sign * sum))
+	if ((sign * sum) <= 0 || INT_MAX < (sign * sum))
 		ft_err(INVALID_ARGV, NULL);
 	return (sum * sign);
 }
